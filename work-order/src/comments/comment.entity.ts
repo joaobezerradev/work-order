@@ -5,8 +5,8 @@ import { WorkOrderEntity } from '../work-orders/work-order.entity';
 
 @Entity('comment')
 export class CommentEnity extends BaseEntity {
-  @Column('uuid', { name: 'orderid' })
-  orderId: string;
+  @Column('uuid', { name: 'workorderid' })
+  workOrderId: string;
 
   @ManyToOne(() => WorkOrderEntity)
   workOrder: WorkOrderEntity;
