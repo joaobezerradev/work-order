@@ -13,6 +13,10 @@ export class WorkOrdersService {
     private usersService: UsersService,
   ) {}
 
+  async getWorkOrders(): Promise<WorkOrderEntity[]> {
+    return this.workOrderRepository.find();
+  }
+
   async createWorkOrder(
     createWorkOrderDto: CreateWorkOrderDto,
   ): Promise<WorkOrderEntity> {
