@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
 import { CreateWorkOrderDto } from './dtos/create-work-order.dto';
+import { WorkOrderStatusEnum } from './enums/work-order-status.enum';
 import { WorkOrderEntity } from './work-order.entity';
 import { WorkOrderRepository } from './work-order.repository';
 
@@ -41,5 +42,23 @@ export class WorkOrdersService {
     await newWorkOrder.save();
 
     return newWorkOrder;
+  }
+
+  private updateWorkOrder(
+    updateWorkOrder: Partial<WorkOrderEntity>,
+  ): Promise<WorkOrderEntity> {
+    return this.workOrderRepository.save(updateWorkOrder);
+  }
+
+  async finalizeWorkOrder(id: string): Promise<WorkOrderEntity> {
+    const foundWorkOrder = await this.getWorkOrderById(id);
+
+    if (!foundWorkOrder) {
+      throw new NotFoundException();
+    }
+
+    foundWorkOrder.status = WorkOrderStatusEnum.FINISHED;
+
+    return this.updateWorkOrder(foundWorkOrder);
   }
 }

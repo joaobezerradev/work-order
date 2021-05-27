@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateWorkOrderDto } from './dtos/create-work-order.dto';
 import { WorkOrderResponseDto } from './dtos/work-order-response.dto';
 import { WorkOrdersService } from './work-orders.service';
@@ -28,7 +28,14 @@ export class WorkOrdersController {
     const createdWorkOrder = await this.workOrdersService.createWorkOrder(
       createWorkOrderDto,
     );
-
     return WorkOrderResponseDto.factory(createdWorkOrder);
+  }
+
+  @Put('/:id')
+  async finalizeWorkOrder(
+    @Param('id') id: string,
+  ): Promise<WorkOrderResponseDto> {
+    const updatedWorkOrder = await this.workOrdersService.finalizeWorkOrder(id);
+    return WorkOrderResponseDto.factory(updatedWorkOrder);
   }
 }
