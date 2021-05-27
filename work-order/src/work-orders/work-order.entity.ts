@@ -12,7 +12,7 @@ import { BaseEntity } from '../commons/entities/abstract.entity';
 import { UserEntity } from '../users/user.entity';
 import { WorkOrderStatus } from './enums/work-order-status.enum';
 
-@Entity('workorder')
+@Entity('workorders')
 export class WorkOrderEntity extends BaseEntity {
   @Column('uuid', { name: 'userid' })
   userId: string;
@@ -31,6 +31,7 @@ export class WorkOrderEntity extends BaseEntity {
   status: WorkOrderStatus;
 
   @OneToMany(() => CommentEnity, (comment: CommentEnity) => comment.workOrder)
+  @JoinColumn([{ name: 'mobilephonecountryid', referencedColumnName: 'id' }])
   comments: CommentEnity[];
 
   @CreateDateColumn({ name: 'startdate', type: 'timestamp with time zone' })

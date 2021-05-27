@@ -9,14 +9,16 @@ export class WorkOrderRepository extends Repository<WorkOrderEntity> {
   ): Promise<WorkOrderEntity[]> {
     const { status, search } = filterDto;
 
-    const query = this.createQueryBuilder('workorder');
+    const query = this.createQueryBuilder('workorders')
+      .select(['workorders', 'comments'])
+      .leftJoinAndSelect('comments.workorderid', 'comments');
 
     if (status) {
-      query.andWhere('workorder.status = :status', { status });
+      query.andWhere('workorders.status = :status', { status });
     }
 
     if (search) {
-      query.andWhere('LOWER(workorder.description) LIKE LOWER(:search)', {
+      query.andWhere('LOWER(workorders.description) LIKE LOWER(:search)', {
         search: `%${search}%`,
       });
     }
