@@ -1,6 +1,6 @@
 import { classToClass, Expose, plainToClass } from 'class-transformer';
 import { BaseDto } from 'src/commons/dtos/base.dto';
-import { WorkOrderStatusEnum } from '../enums/work-order-status.enum';
+import { WorkOrderStatus } from '../enums/work-order-status.enum';
 import { WorkOrderEntity } from '../work-order.entity';
 
 export class WorkOrderResponseDto extends BaseDto {
@@ -14,7 +14,7 @@ export class WorkOrderResponseDto extends BaseDto {
   price: number;
 
   @Expose()
-  status: WorkOrderStatusEnum;
+  status: WorkOrderStatus;
 
   @Expose()
   startDate: Date;
