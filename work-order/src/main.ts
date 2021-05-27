@@ -4,6 +4,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -12,8 +13,18 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  const port = process.env.PORT;
+  const options = new DocumentBuilder()
+    .setTitle('API Work-order')
+    .setDescription('lorem ipsum')
+    .setVersion('1.0.0')
+    .addTag('João Bezerra')
+    .addBearerAuth({ in: 'header', type: 'http' })
+    .build();
 
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+
+  const port = process.env.PORT;
   app
     .listen(parseInt(port.toString(), 10), '0.0.0.0')
     .then(() => {
