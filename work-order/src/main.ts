@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -10,6 +11,14 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  await app.listen(3000);
+
+  const port = process.env.PORT;
+
+  app
+    .listen(parseInt(port.toString(), 10), '0.0.0.0')
+    .then(() => {
+      Logger.log(`API Listen on ${port}`);
+    })
+    .catch((error) => Logger.error(error));
 }
 bootstrap();
