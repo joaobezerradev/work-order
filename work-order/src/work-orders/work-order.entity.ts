@@ -1,8 +1,9 @@
-import { Column, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../commons/entities/abstract.entity';
 import { UserEntity } from '../users/user.entity';
-import { OrderStatusEnum } from './enums/order-status.enum';
+import { WorkOrderStatus } from './enums/work-order-status.enum';
 
+@Entity('workorder')
 export class WorkOrderEntity extends BaseEntity {
   @Column('uuid')
   userId: string;
@@ -18,7 +19,7 @@ export class WorkOrderEntity extends BaseEntity {
   price: number;
 
   @Column()
-  status: OrderStatusEnum;
+  status: WorkOrderStatus;
 
   @Column({ type: Date })
   startDate = new Date();
