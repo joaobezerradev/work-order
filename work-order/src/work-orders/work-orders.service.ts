@@ -16,6 +16,9 @@ export class WorkOrdersService {
   async getWorkOrders(): Promise<WorkOrderEntity[]> {
     return this.workOrderRepository.find();
   }
+  async getWorkOrderById(id: string): Promise<WorkOrderEntity> {
+    return this.workOrderRepository.findOne(id);
+  }
 
   async createWorkOrder(
     createWorkOrderDto: CreateWorkOrderDto,
