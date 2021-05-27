@@ -8,6 +8,16 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private userRepository: UserRepository) {}
 
+  async findById(id: string): Promise<UserEntity> {
+    const found = await this.userRepository.findOne(id);
+
+    if (!found) {
+      throw new NotFoundException();
+    }
+
+    return found;
+  }
+
   async findByEmail(email: string): Promise<UserEntity> {
     const found = await this.userRepository.findOne({ where: { email } });
 
