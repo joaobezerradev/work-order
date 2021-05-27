@@ -29,4 +29,8 @@ export class WorkOrderResponseDto extends BaseDto {
 
     return classToClass(responseData, { excludeExtraneousValues: true });
   }
+
+  static factoryMap(workOrders: WorkOrderEntity[]): WorkOrderResponseDto[] {
+    return workOrders.map((workOrder) => this.factory(workOrder));
+  }
 }
