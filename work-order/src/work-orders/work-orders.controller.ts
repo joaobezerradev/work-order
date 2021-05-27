@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateWorkOrderDto } from './dtos/create-work-order.dto';
+import { GetWorkOrderFilterDto } from './dtos/get-work-order-filter.dto';
 import { WorkOrderResponseDto } from './dtos/work-order-response.dto';
 import { WorkOrdersService } from './work-orders.service';
 
@@ -8,8 +9,12 @@ export class WorkOrdersController {
   constructor(private workOrdersService: WorkOrdersService) {}
 
   @Get()
-  async getWorkOrders(): Promise<WorkOrderResponseDto[]> {
-    const workOrders = await this.workOrdersService.getWorkOrders();
+  async getWorkOrders(
+    @Query() getWorkOrderFilterDto: GetWorkOrderFilterDto,
+  ): Promise<WorkOrderResponseDto[]> {
+    const workOrders = await this.workOrdersService.getWorkOrders(
+      getWorkOrderFilterDto,
+    );
     return WorkOrderResponseDto.factoryMap(workOrders);
   }
 
