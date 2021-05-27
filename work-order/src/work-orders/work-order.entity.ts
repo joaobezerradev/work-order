@@ -19,4 +19,10 @@ export class WorkOrderEntity extends BaseEntity {
 
   @Column()
   status: OrderStatusEnum;
+
+  @Column({ type: Date })
+  startDate = new Date();
+
+  @Column({ type: Date })
+  endDate: Date;
 }
