@@ -9,9 +9,10 @@ export class WorkOrderRepository extends Repository<WorkOrderEntity> {
   ): Promise<WorkOrderEntity[]> {
     const { status, search } = filterDto;
 
-    const query = this.createQueryBuilder('workorders')
-      .select(['workorders', 'comments'])
-      .leftJoinAndSelect('comments.workorderid', 'comments');
+    const query = this.createQueryBuilder('workorders').leftJoinAndSelect(
+      'workorders.comment',
+      'comment',
+    );
 
     if (status) {
       query.andWhere('workorders.status = :status', { status });
