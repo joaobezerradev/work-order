@@ -17,13 +17,13 @@ import { CommentResponseDto } from './dtos/comment-response.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 
 @ApiTags('comments')
-@Controller('comments/:workOrderId/comments')
+@Controller('comments')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 export class CommentsController {
   constructor(private commentsService: CommentsService) {}
 
-  @Get()
+  @Get('/:workOrderId/comments')
   @ApiDefaultResponse(CommentResponseDto)
   async getCommentById(
     @Param('workOrderId', new ParseUUIDPipe()) workOrderId: string,
@@ -35,7 +35,7 @@ export class CommentsController {
     return foundComments;
   }
 
-  @Post()
+  @Post('/:workOrderId/comments')
   @ApiDefaultResponse(CommentResponseDto)
   async createComment(
     @Body(ValidationPipe)
@@ -44,6 +44,13 @@ export class CommentsController {
     const createdComment = await this.commentsService.createComment(
       createCommentDto,
     );
+    return CommentResponseDto.factory(createdComment);
+  }
+
+  @Post()
+  @ApiDefaultResponse(CommentResponseDto)
+  async createCommentTest(): Promise<CommentResponseDto> {
+    const createdComment = await this.commentsService.createCommentTest();
     return CommentResponseDto.factory(createdComment);
   }
 }
