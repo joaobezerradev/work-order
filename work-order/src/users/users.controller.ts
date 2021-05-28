@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   UseGuards,
   ValidationPipe,
@@ -39,14 +40,14 @@ export class UsersController {
   @ApiOkResponse({ description: 'Show user by id' })
   @ApiUnauthorizedResponse()
   async getUserById(
-    @Param('id', ValidationPipe) id: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<UserResponseDto> {
     const user = await this.usersService.findById(id);
     return UserResponseDto.factory(user);
   }
 
   @Post()
-  @ApiOkResponse({ description: 'Created user' })
+  @ApiOkResponse({ description: 'Create user' })
   @ApiUnauthorizedResponse()
   async createUser(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
