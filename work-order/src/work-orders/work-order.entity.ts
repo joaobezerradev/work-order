@@ -1,5 +1,5 @@
-import { CommentEnity } from 'src/comments/comment.entity';
-import { getUTCDate } from 'src/commons/functions/get-utc-date.function';
+import { CommentEnity } from '../comments/comment.entity';
+import { getUTCDate } from '../commons/functions/get-utc-date.function';
 import {
   Column,
   CreateDateColumn,

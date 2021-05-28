@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { CreateWorkOrderDto } from './dtos/create-work-order.dto';
 import { GetWorkOrderFilterDto } from './dtos/get-work-order-filter.dto';
 import { WorkOrderStatus } from './enums/work-order-status.enum';
@@ -20,6 +20,7 @@ export class WorkOrdersService {
   ): Promise<WorkOrderEntity[]> {
     return this.workOrderRepository.getWorkOrders(getWorkOrderFilterDto);
   }
+
   async getWorkOrderById(id: string): Promise<WorkOrderEntity> {
     return this.workOrderRepository.findOne(id);
   }
