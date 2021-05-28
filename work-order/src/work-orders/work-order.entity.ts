@@ -30,7 +30,9 @@ export class WorkOrderEntity extends BaseEntity {
   @Column()
   status: WorkOrderStatus;
 
-  @OneToMany(() => CommentEnity, (comment: CommentEnity) => comment.workOrder)
+  @OneToMany(() => CommentEnity, (comment: CommentEnity) => comment.workOrder, {
+    cascade: ['insert'],
+  })
   @JoinColumn({ name: 'id' })
   comment: CommentEnity;
 
