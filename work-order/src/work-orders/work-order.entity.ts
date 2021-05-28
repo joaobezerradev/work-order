@@ -31,8 +31,8 @@ export class WorkOrderEntity extends BaseEntity {
   status: WorkOrderStatus;
 
   @OneToMany(() => CommentEnity, (comment: CommentEnity) => comment.workOrder)
-  @JoinColumn([{ name: 'mobilephonecountryid', referencedColumnName: 'id' }])
-  comments: CommentEnity[];
+  @JoinColumn({ name: 'id' })
+  comment: CommentEnity;
 
   @CreateDateColumn({ name: 'startdate', type: 'timestamp with time zone' })
   startDate = getUTCDate();
