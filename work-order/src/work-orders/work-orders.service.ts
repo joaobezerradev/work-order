@@ -39,6 +39,7 @@ export class WorkOrdersService {
       userId,
       description,
       price,
+      status: WorkOrderStatus.OPEN,
       endDate: null,
     });
 
