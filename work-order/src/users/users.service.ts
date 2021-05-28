@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,11 +14,11 @@ export class UsersService {
   ) {}
 
   async findById(id: string): Promise<UserEntity> {
-    return this.userRepository.findById(id);
+    return this.userRepository.findOne(id);
   }
 
   async findAll(): Promise<UserEntity[]> {
-    return this.userRepository.findAll();
+    return this.userRepository.find();
   }
 
   async findByEmail(email: string): Promise<UserEntity> {
@@ -29,7 +28,7 @@ export class UsersService {
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
     const { email, password } = createUserDto;
 
-    const foundUser = await this.userRepository.findByEmail(email);
+    const foundUser = await this.findByEmail(email);
 
     if (foundUser) {
       throw new ConflictException('User already exists.');
@@ -45,25 +44,6 @@ export class UsersService {
     await newUser.save();
 
     return newUser;
-  }
-
-  async findBySecurityStamp(
-    id: string,
-    securityStamp: string,
-  ): Promise<UserEntity> {
-    return this.userRepository.findBySecurityStamp(id, securityStamp);
-  }
-
-  async resetPassword(
-    userData: Partial<UserEntity>,
-    newPassword: string,
-  ): Promise<UserEntity> {
-    const securityStamp = uuid();
-    const passwordHash = this.hashPassword(newPassword);
-
-    const updatedUser = { ...userData, passwordHash, securityStamp };
-
-    return this.userRepository.save(updatedUser);
   }
 
   private hashPassword(password: string): string {
