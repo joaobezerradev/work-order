@@ -23,7 +23,7 @@ export class WorkOrderResponseDto extends BaseDto {
   endDate: Date | null;
 
   static factory(workOrder: WorkOrderEntity): WorkOrderResponseDto {
-    const responseData = plainToClass(this, workOrder, {
+    const responseData = plainToClass(WorkOrderResponseDto, workOrder, {
       ignoreDecorators: true,
     });
 

@@ -7,7 +7,7 @@ export class UserResponseDto extends BaseDto {
   email: string;
 
   static factory(user: UserEntity): UserResponseDto {
-    const responseData = plainToClass(this, user, {
+    const responseData = plainToClass(UserResponseDto, user, {
       ignoreDecorators: true,
     });
 
