@@ -17,7 +17,6 @@ async function bootstrap() {
     .setTitle('API Work-order')
     .setDescription('lorem ipsum')
     .setVersion('1.0.0')
-    .addTag('João Bezerra')
     .addBearerAuth({ in: 'header', type: 'http' })
     .build();
 
