@@ -23,6 +23,6 @@ export class CreateWorkOrderDto {
 
   @IsNotEmpty()
   @IsNumber()
-  @ApiProperty({ type: Number, example: '4.000' })
+  @ApiProperty({ type: Number, example: 4 })
   price: number;
 }
