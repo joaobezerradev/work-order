@@ -14,13 +14,13 @@ export class CommentEnity extends BaseEntity {
   @Column('uuid', { name: 'workorderid' })
   workOrderId: string;
 
-  @ManyToOne(() => WorkOrderEntity)
-  @JoinColumn({ name: 'workorderid' })
+  @ManyToOne(() => WorkOrderEntity, { cascade: true })
+  @JoinColumn({ name: 'workorderid', referencedColumnName: 'id' })
   workOrder: WorkOrderEntity;
 
   @Column()
   description: string;
 
-  @CreateDateColumn({ name: 'createddate', type: 'timestamp with time zone' })
+  @CreateDateColumn({ name: 'senddate', type: 'timestamp with time zone' })
   sendDate = getUTCDate();
 }
