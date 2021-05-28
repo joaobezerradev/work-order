@@ -9,11 +9,15 @@ export class CommentResponseDto extends BaseDto {
   @Expose()
   sendDate: Date;
 
-  public static factory(comment: CommentEnity): CommentResponseDto {
-    const responseData = plainToClass(this, comment, {
+  static factory(comment: CommentEnity): CommentResponseDto {
+    const responseData = plainToClass(CommentResponseDto, comment, {
       ignoreDecorators: true,
     });
 
     return classToClass(responseData, { excludeExtraneousValues: true });
+  }
+
+  static factoryMap(comments: CommentEnity[]): CommentResponseDto[] {
+    return comments.map((comment) => this.factory(comment));
   }
 }
